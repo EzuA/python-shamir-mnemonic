@@ -51,7 +51,6 @@ def cli() -> None:
 @click.option(
     "-s", "--strength", type=int, default=128, help="Secret strength in bits."
 )
-@click.option("-S", "--master-secret", help="String master secret.")
 @click.option("-p", "--passphrase", help="Supply passphrase for recovery.")
 def create(
     scheme: str,
@@ -59,7 +58,6 @@ def create(
     group_threshold: int,
     extendable: bool,
     exponent: int,
-    master_secret: str,
     passphrase: str,
     strength: int,
 ) -> None:
@@ -76,6 +74,7 @@ def create(
             Keep the master for yourself, give the 5 shares to trusted friends.
     custom: Specify configuration with -t and -g options.
     """
+    master_secret = click.prompt("Enter master secret")
     if passphrase and not master_secret:
         raise click.ClickException(
             "Only use passphrase in conjunction with an explicit master secret"
@@ -149,7 +148,7 @@ def create(
         )
         click.echo(f"{group_str} - {share_str}")
         for g in group:
-            click.echo(g)
+            click.echo(g + "\n")
 
 
 FINISHED = style("\u2713", fg="green", bold=True)
