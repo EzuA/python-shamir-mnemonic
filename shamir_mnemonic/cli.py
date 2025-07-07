@@ -51,14 +51,16 @@ def cli() -> None:
 @click.option(
     "-s", "--strength", type=int, default=128, help="Secret strength in bits."
 )
-@click.option("-p", "--passphrase", help="Supply passphrase for recovery.")
+@click.option(
+    "-p", "--passphrase-prompt", is_flag=True, help="Use passphrase after recovering"
+)
 def create(
     scheme: str,
     groups: Sequence[Tuple[int, int]],
     group_threshold: int,
     extendable: bool,
     exponent: int,
-    passphrase: str,
+    passphrase_prompt: bool,
     strength: int,
 ) -> None:
     """Create a Shamir mnemonic set
@@ -75,6 +77,12 @@ def create(
     custom: Specify configuration with -t and -g options.
     """
     master_secret = click.prompt("Enter master secret")
+
+    if passphrase_prompt:
+        passphrase = click.prompt("Enter passphrase")
+    else:
+        passphrase = None
+    
     if passphrase and not master_secret:
         raise click.ClickException(
             "Only use passphrase in conjunction with an explicit master secret"
@@ -228,7 +236,7 @@ def recover(passphrase_prompt: bool) -> None:
     click.secho("SUCCESS!", fg="green", bold=True)
     click.echo(f"Your master secret is (hex): {master_secret.hex()}")
     click.echo(
-        f"Your master secret is (str): {codecs.decode(master_secret.hex(), 'hex').decode('utf-8')}"
+        f"Your master secret is (str): {codecs.decode(master_secret.hex(), 'hex').decode()}"
     )
 
 

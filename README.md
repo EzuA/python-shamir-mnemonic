@@ -68,14 +68,15 @@ command:
 
 .. code-block:: console
 
-    $ shamir create 3of5   # create a 3-of-5 set of shares
-    $ shamir recover       # interactively recombine shares to get the master secret
+    $ python3 -m shamir_mnemonic.cli create 2of3   # create a 2-of-3 set of shares
+    $ python3 -m shamir_mnemonic.cli recover       # interactively recombine shares to get the master secret
 
-You can supply your own master secret as a hexadecimal string:
+You can put a passphrase as string:
 
 .. code-block:: console
 
-    $ shamir create 3of5 --master-secret=cb21904441dfd01a392701ecdc25d61c
+    $ python3 -m shamir_mnemonic.cli create 2of3 --passphrase-prompt
+    $ python3 -m shamir_mnemonic.cli recover --passphrase-prompt
 
 You can specify a custom scheme. For example, to create three groups, with 2-of-3,
 2-of-5, and 4-of-5, and require completion of all three groups, use:
@@ -86,12 +87,6 @@ You can specify a custom scheme. For example, to create three groups, with 2-of-
 
 Use :code:`shamir --help` or :code:`shamir create --help` to see all available options.
 
-If you want to run the CLI from a local checkout without installing, use the following
-command:
-
-.. code-block:: console
-
-    $ python3 -m shamir_mnemonic.cli
 
 Test vectors
 ------------
