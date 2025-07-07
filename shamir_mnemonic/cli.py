@@ -82,7 +82,7 @@ def create(
         passphrase = click.prompt("Enter passphrase")
     else:
         passphrase = None
-    
+
     if passphrase and not master_secret:
         raise click.ClickException(
             "Only use passphrase in conjunction with an explicit master secret"
@@ -235,9 +235,17 @@ def recover(passphrase_prompt: bool) -> None:
         sys.exit(1)
     click.secho("SUCCESS!", fg="green", bold=True)
     click.echo(f"Your master secret is (hex): {master_secret.hex()}")
-    click.echo(
-        f"Your master secret is (str): {codecs.decode(master_secret.hex(), 'hex').decode()}"
-    )
+
+    try:
+        click.echo(
+            f"Your master secret is (str): {codecs.decode(master_secret.hex(), 'hex').decode()}"
+        )
+    except:
+        click.secho(
+            "ERROR decoding master secret, check if you need to provide a passphrase with -p option",
+            fg="red",
+            bold=True,
+        )
 
 
 if __name__ == "__main__":
