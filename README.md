@@ -49,10 +49,7 @@ Install the [Poetry](https://python-poetry.org/) tool, checkout
 .. code-block:: console
 
     $ pip3 install poetry
-    $ git clone https://github.com/trezor/python-shamir-mnemonic
-    $ cd python-shamir-mnemonic
     $ poetry install
-    $ poetry shell
 
 CLI usage
 ---------

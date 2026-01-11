@@ -5,7 +5,7 @@ description = "SLIP-39 Shamir Mnemonics"
 authors = ["Trezor <info@trezor.io>"]
 license = "MIT"
 readme = [
-    "README.rst",
+    "README.md",
     "CHANGELOG.rst",
 ]
 
